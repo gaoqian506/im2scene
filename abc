@@ -1,3 +1,107 @@
+
+
+
+
+import torchvision
+
+
+class Module(nn.Module):
+
+    def __init__(self):
+        super(Module, self).__init__()
+        # 3 input image channel, 10 output channels, 3 square convolution
+        # kernel
+
+        self.net = torchvision.models.resnet18()
+
+        self.conv1 = nn.Conv2d(3, 10, 3)    # 3x200x200->
+        self.conv2 = nn.Conv2d(10, 20, 3)
+        self.conv3 = nn.Conv2d(20, 10, 3)
+        self.conv4 = nn.Conv2d(10, 5, 3)
+        # an affine operation: y = Wx + b
+        self.fc1 = nn.Linear(16 * 5 * 5, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 10)
+
+    def forward(self, x):
+        # Max pooling over a (2, 2) window
+        x = F.max_pool2d(F.relu(self.conv1(x)), (2, 2))
+        # If the size is a square you can only specify a single number
+        x = F.max_pool2d(F.relu(self.conv2(x)), 2)
+        x = x.view(-1, self.num_flat_features(x))
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+    def num_flat_features(self, x):
+        size = x.size()[1:]  # all dimensions except the batch dimension
+        num_features = 1
+        for s in size:
+            num_features *= s
+        return num_features
+
+import torchvision
+
+from torchvision import datasets, transforms
+
+class Data:
+    def __init__(self, path):
+    self.data_transforms = {
+        'train': transforms.Compose([
+            transforms.RandomResizedCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ]),
+        'val': transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ]),
+    }
+
+    self.image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x])
+    self.dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4, shuffle=True, num_workers=4)
+
+
+import cv2
+import numpy as np
+
+class Data:
+    def __init__(self, path):
+        self.path = path
+
+    def load_image(self):
+        return cv2.imread(self.path).astype(np.float32)/255.0
+
+
+    def step(self, image):
+        return
+
+
 # import data.Data
 # import model.Model
 # import env.Env
+
+from torch.autograd import Variable
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision
+
+
+
+        self.seq = nn.Sequencial(
+            nn.Conv2d(3, 10, 3)     # 3x200x200
+            nn.ReLU()
+            nn.Max
+        )
+        self.conv1 = nn.Conv2d(3, 10, 3)    # 3x200x200->
+        self.conv2 = nn.Conv2d(10, 20, 3)
+        self.conv3 = nn.Conv2d(20, 10, 3)
+        self.conv4 = nn.Conv2d(10, 5, 3)
+        # an affine operation: y = Wx + b
+        self.fc1 = nn.Linear(16 * 5 * 5, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 10)

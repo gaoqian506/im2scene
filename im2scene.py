@@ -24,7 +24,7 @@ def train():
             # model.step
             action = model.step(image)
             # env.eval
-            reverd = env.evaluate(action)
+            reverd = env.evaluate(image, action)
             # model.learn
             model.learn(reverd)
 
