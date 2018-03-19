@@ -3,7 +3,9 @@ import cv2
 # from skimage import io
 import numpy as np
 import torch
+
 from torch.autograd import Variable
+
 
 
 class Data:
