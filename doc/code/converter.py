@@ -17,14 +17,19 @@ class Converter:
 	def learn(self, image):
 		self.builder.init()
 		self.renderer.init()
+		scene = self.builder.get_scene()		
+		earlier = self.renderer.render(scene_1)		
 
-		scene_1 = self.builder.get_scene()
-		snapshots_1 = self.renderer.render(scene_1)
+		while Ture:
 
-		self.builder.step(snapshots)
+			maks = self.builder.step(earlier)
+			later = self.renderer.render(scene)
+			reverd = self.reviewer.review(image, earlier, later, mask)
+			self.builder.learn(reverd)
+			later = earlier
 
-		scene_2 = self.builder.get_scene()
-		snapshots_2 = self.renderer.render(scene_2)
+			if self.reviewer.done:
+				break
 
 
 
